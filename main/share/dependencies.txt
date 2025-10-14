@@ -1,0 +1,2 @@
+java.base:17.35
+java.xml:17.35

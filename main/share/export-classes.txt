@@ -1,0 +1,10 @@
+java.util.prefs.AbstractPreferences
+java.util.prefs.BackingStoreException
+java.util.prefs.Base64
+java.util.prefs.InvalidPreferencesFormatException
+java.util.prefs.NodeChangeEvent
+java.util.prefs.NodeChangeListener
+java.util.prefs.PreferenceChangeEvent
+java.util.prefs.PreferenceChangeListener
+java.util.prefs.Preferences
+java.util.prefs.PreferencesFactory
