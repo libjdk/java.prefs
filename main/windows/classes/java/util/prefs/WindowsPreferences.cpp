@@ -318,7 +318,7 @@ $longs* WindowsPreferences::WindowsRegOpenKey1(int64_t hKey, $bytes* subKey, int
 			}
 			sleepTime *= 2;
 			$assign(result, WindowsRegOpenKey(hKey, subKey, securityMask));
-			if (result->get(WindowsPreferences::ERROR_CODE) == WindowsPreferences::ERROR_SUCCESS) {
+			if ($nc(result)->get(WindowsPreferences::ERROR_CODE) == WindowsPreferences::ERROR_SUCCESS) {
 				return result;
 			}
 		}
