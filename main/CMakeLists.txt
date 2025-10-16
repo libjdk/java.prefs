@@ -113,12 +113,12 @@ endif()
 
 install(
 	DIRECTORY "share/include/"
-	DESTINATION "include"
+	DESTINATION "${JCPP_INSTALL_INCLUDE_DIR}"
 )
 
 if(INSTALL_TO_REPO)
 	install(
 		FILES "share/dependencies.txt"
-		DESTINATION "."
+		DESTINATION "${JCPP_INSTALL_DIR}"
 	)
 endif()
