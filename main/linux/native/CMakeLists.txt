@@ -1,11 +1,7 @@
 #machine generated
 
-if(JCPP_OS MATCHES "macosx")
-	include_directories("../../macosx/native")
-endif()
-
-if(JCPP_OS MATCHES "windows")
-	include_directories("../../windows/native")
+if(JCPP_OS MATCHES "linux")
+	add_definitions("-D_ALLBSD_SOURCE")
 endif()
 
 aux_source_directory("${CMAKE_CURRENT_SOURCE_DIR}" linux-native_SRCS)

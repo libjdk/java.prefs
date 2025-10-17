@@ -95,6 +95,18 @@ elseif(JCPP_OS MATCHES "macosx")
 	SET_TARGET_PROPERTIES(${JCPP_PROJECT_NAME}_shared PROPERTIES INSTALL_RPATH ".;../lib")
 endif()
 
+	if(JCPP_OS MATCHES "macosx")
+		set(JCPP_EXT_LIBS ${JCPP_EXT_LIBS}
+			-framework CoreFoundation -framework Foundation
+		)
+	endif()
+
+	if(JCPP_OS MATCHES "windows")
+		set(JCPP_EXT_LIBS ${JCPP_EXT_LIBS}
+			advapi32.lib
+		)
+	endif()
+
 	target_link_libraries(${JCPP_PROJECT_NAME}_shared
 		PUBLIC ${JCPP_DEPENDENCY_LIBS}
 		PRIVATE ${JCPP_EXT_LIBS}

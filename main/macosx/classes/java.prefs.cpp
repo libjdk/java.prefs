@@ -16,25 +16,6 @@
 #include <java/util/prefs/AbstractPreferences$NodeRemovedEvent.h>
 #include <java/util/prefs/BackingStoreException.h>
 #include <java/util/prefs/Base64.h>
-#include <java/util/prefs/FileSystemPreferences.h>
-#include <java/util/prefs/FileSystemPreferences$1.h>
-#include <java/util/prefs/FileSystemPreferences$10.h>
-#include <java/util/prefs/FileSystemPreferences$11.h>
-#include <java/util/prefs/FileSystemPreferences$12.h>
-#include <java/util/prefs/FileSystemPreferences$2.h>
-#include <java/util/prefs/FileSystemPreferences$3.h>
-#include <java/util/prefs/FileSystemPreferences$4.h>
-#include <java/util/prefs/FileSystemPreferences$4$1.h>
-#include <java/util/prefs/FileSystemPreferences$5.h>
-#include <java/util/prefs/FileSystemPreferences$6.h>
-#include <java/util/prefs/FileSystemPreferences$7.h>
-#include <java/util/prefs/FileSystemPreferences$8.h>
-#include <java/util/prefs/FileSystemPreferences$9.h>
-#include <java/util/prefs/FileSystemPreferences$Change.h>
-#include <java/util/prefs/FileSystemPreferences$NodeCreate.h>
-#include <java/util/prefs/FileSystemPreferences$Put.h>
-#include <java/util/prefs/FileSystemPreferences$Remove.h>
-#include <java/util/prefs/FileSystemPreferencesFactory.h>
 #include <java/util/prefs/InvalidPreferencesFormatException.h>
 #include <java/util/prefs/MacOSXPreferences.h>
 #include <java/util/prefs/MacOSXPreferencesFactory.h>
@@ -66,25 +47,6 @@
 	$classEntry("java.util.prefs.AbstractPreferences$NodeRemovedEvent", ::java::util::prefs::AbstractPreferences$NodeRemovedEvent),
 	$classEntry("java.util.prefs.BackingStoreException", ::java::util::prefs::BackingStoreException),
 	$classEntry("java.util.prefs.Base64", ::java::util::prefs::Base64),
-	$classEntry("java.util.prefs.FileSystemPreferences", ::java::util::prefs::FileSystemPreferences),
-	$classEntry("java.util.prefs.FileSystemPreferences$1", ::java::util::prefs::FileSystemPreferences$1),
-	$classEntry("java.util.prefs.FileSystemPreferences$10", ::java::util::prefs::FileSystemPreferences$10),
-	$classEntry("java.util.prefs.FileSystemPreferences$11", ::java::util::prefs::FileSystemPreferences$11),
-	$classEntry("java.util.prefs.FileSystemPreferences$12", ::java::util::prefs::FileSystemPreferences$12),
-	$classEntry("java.util.prefs.FileSystemPreferences$2", ::java::util::prefs::FileSystemPreferences$2),
-	$classEntry("java.util.prefs.FileSystemPreferences$3", ::java::util::prefs::FileSystemPreferences$3),
-	$classEntry("java.util.prefs.FileSystemPreferences$4", ::java::util::prefs::FileSystemPreferences$4),
-	$classEntry("java.util.prefs.FileSystemPreferences$4$1", ::java::util::prefs::FileSystemPreferences$4$1),
-	$classEntry("java.util.prefs.FileSystemPreferences$5", ::java::util::prefs::FileSystemPreferences$5),
-	$classEntry("java.util.prefs.FileSystemPreferences$6", ::java::util::prefs::FileSystemPreferences$6),
-	$classEntry("java.util.prefs.FileSystemPreferences$7", ::java::util::prefs::FileSystemPreferences$7),
-	$classEntry("java.util.prefs.FileSystemPreferences$8", ::java::util::prefs::FileSystemPreferences$8),
-	$classEntry("java.util.prefs.FileSystemPreferences$9", ::java::util::prefs::FileSystemPreferences$9),
-	$classEntry("java.util.prefs.FileSystemPreferences$Change", ::java::util::prefs::FileSystemPreferences$Change),
-	$classEntry("java.util.prefs.FileSystemPreferences$NodeCreate", ::java::util::prefs::FileSystemPreferences$NodeCreate),
-	$classEntry("java.util.prefs.FileSystemPreferences$Put", ::java::util::prefs::FileSystemPreferences$Put),
-	$classEntry("java.util.prefs.FileSystemPreferences$Remove", ::java::util::prefs::FileSystemPreferences$Remove),
-	$classEntry("java.util.prefs.FileSystemPreferencesFactory", ::java::util::prefs::FileSystemPreferencesFactory),
 	$classEntry("java.util.prefs.InvalidPreferencesFormatException", ::java::util::prefs::InvalidPreferencesFormatException),
 	$classEntry("java.util.prefs.MacOSXPreferences", ::java::util::prefs::MacOSXPreferences),
 	$classEntry("java.util.prefs.MacOSXPreferencesFactory", ::java::util::prefs::MacOSXPreferencesFactory),
