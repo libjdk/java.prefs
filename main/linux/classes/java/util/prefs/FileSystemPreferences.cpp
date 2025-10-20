@@ -417,6 +417,7 @@ void FileSystemPreferences::setupSystemRoot() {
 }
 
 void FileSystemPreferences::replayChanges() {
+	$useLocalCurrentObjectStackCache();
 	{
 		int32_t i = 0;
 		int32_t n = $nc(this->changeLog)->size();
@@ -428,6 +429,7 @@ void FileSystemPreferences::replayChanges() {
 
 void FileSystemPreferences::syncWorld() {
 	$init(FileSystemPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($Preferences, userRt, nullptr);
 	$var($Preferences, systemRt, nullptr);
 	$synchronized(FileSystemPreferences::class$) {
@@ -465,6 +467,7 @@ void FileSystemPreferences::init$(bool user) {
 }
 
 void FileSystemPreferences::init$(FileSystemPreferences* parent, $String* name) {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	$AbstractPreferences::init$(parent, name);
 	$set(this, prefsCache, nullptr);
@@ -517,6 +520,7 @@ void FileSystemPreferences::initCacheIfNecessary() {
 }
 
 void FileSystemPreferences::loadCache() {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	try {
 		$AccessController::doPrivileged(static_cast<$PrivilegedExceptionAction*>($$new($FileSystemPreferences$6, this)));
@@ -527,6 +531,7 @@ void FileSystemPreferences::loadCache() {
 }
 
 void FileSystemPreferences::writeBackCache() {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	try {
 		$AccessController::doPrivileged(static_cast<$PrivilegedExceptionAction*>($$new($FileSystemPreferences$7, this)));
@@ -537,6 +542,7 @@ void FileSystemPreferences::writeBackCache() {
 }
 
 $StringArray* FileSystemPreferences::keysSpi() {
+	$useLocalCurrentObjectStackCache();
 	initCacheIfNecessary();
 	return $fcast($StringArray, $nc($($nc(this->prefsCache)->keySet()))->toArray($$new($StringArray, $nc(this->prefsCache)->size())));
 }
@@ -551,6 +557,7 @@ $AbstractPreferences* FileSystemPreferences::childSpi($String* name) {
 }
 
 void FileSystemPreferences::removeNode() {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(isUserNode() ? FileSystemPreferences::userLockFile : FileSystemPreferences::systemLockFile) {
 		if (!lockFile(false)) {
 			$throw($$new($BackingStoreException, "Couldn\'t get file lock."_s));
@@ -572,6 +579,7 @@ void FileSystemPreferences::removeNode() {
 }
 
 void FileSystemPreferences::removeNodeSpi() {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	try {
 		$AccessController::doPrivileged(static_cast<$PrivilegedExceptionAction*>($$new($FileSystemPreferences$9, this)));
@@ -583,6 +591,7 @@ void FileSystemPreferences::removeNodeSpi() {
 
 void FileSystemPreferences::sync() {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		$beforeCallerSensitive();
 		bool userNode = isUserNode();
 		bool shared = false;
@@ -615,6 +624,7 @@ void FileSystemPreferences::sync() {
 }
 
 void FileSystemPreferences::syncSpi() {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	try {
 		$AccessController::doPrivileged(static_cast<$PrivilegedExceptionAction*>($$new($FileSystemPreferences$12, this)));
@@ -671,6 +681,7 @@ bool FileSystemPreferences::isDirChar(char16_t ch) {
 
 $String* FileSystemPreferences::dirName($String* nodeName) {
 	$init(FileSystemPreferences);
+	$useLocalCurrentObjectStackCache();
 	{
 		int32_t i = 0;
 		int32_t n = $nc(nodeName)->length();
@@ -701,6 +712,7 @@ $bytes* FileSystemPreferences::byteArray($String* s) {
 
 $String* FileSystemPreferences::nodeName($String* dirName) {
 	$init(FileSystemPreferences);
+	$useLocalCurrentObjectStackCache();
 	if ($nc(dirName)->charAt(0) != u'_') {
 		return dirName;
 	}
@@ -715,6 +727,7 @@ $String* FileSystemPreferences::nodeName($String* dirName) {
 }
 
 bool FileSystemPreferences::lockFile(bool shared) {
+	$useLocalCurrentObjectStackCache();
 	bool usernode = isUserNode();
 	$var($ints, result, nullptr);
 	int32_t errorCode = 0;
@@ -750,6 +763,7 @@ bool FileSystemPreferences::lockFile(bool shared) {
 }
 
 void FileSystemPreferences::checkLockFile0ErrorCode(int32_t errorCode) {
+	$useLocalCurrentObjectStackCache();
 	if (errorCode == FileSystemPreferences::EACCES) {
 		$throwNew($SecurityException, $$str({"Could not lock "_s, (isUserNode() ? "User prefs."_s : "System prefs."_s), " Lock file access denied."_s}));
 	}
@@ -786,6 +800,7 @@ int32_t FileSystemPreferences::chmod($String* fileName, int32_t permission) {
 }
 
 void FileSystemPreferences::unlockFile() {
+	$useLocalCurrentObjectStackCache();
 	int32_t result = 0;
 	bool usernode = isUserNode();
 	$var($File, lockFile, usernode ? FileSystemPreferences::userLockFile : FileSystemPreferences::systemLockFile);
@@ -821,6 +836,7 @@ $Void* FileSystemPreferences::lambda$static$0() {
 }
 
 void clinit$FileSystemPreferences($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	{
 		$var($PrivilegedAction, load, static_cast<$PrivilegedAction*>($new(FileSystemPreferences$$Lambda$lambda$static$0$1)));

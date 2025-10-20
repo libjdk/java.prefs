@@ -197,6 +197,7 @@ MacOSXPreferencesFile* MacOSXPreferencesFile::getFile($String* newName, bool isU
 	$load(MacOSXPreferencesFile);
 	$synchronized(class$) {
 		$init(MacOSXPreferencesFile);
+		$useLocalCurrentObjectStackCache();
 		$var(MacOSXPreferencesFile, result, nullptr);
 		if (MacOSXPreferencesFile::cachedFiles == nullptr) {
 			$assignStatic(MacOSXPreferencesFile::cachedFiles, $new($HashMap));
@@ -219,6 +220,7 @@ bool MacOSXPreferencesFile::syncWorld() {
 	$load(MacOSXPreferencesFile);
 	$synchronized(class$) {
 		$init(MacOSXPreferencesFile);
+		$useLocalCurrentObjectStackCache();
 		bool ok = true;
 		if (MacOSXPreferencesFile::cachedFiles != nullptr && !$nc(MacOSXPreferencesFile::cachedFiles)->isEmpty()) {
 			$var($Iterator, iter, $nc($($nc(MacOSXPreferencesFile::cachedFiles)->values()))->iterator());
@@ -249,6 +251,7 @@ bool MacOSXPreferencesFile::syncUser() {
 	$load(MacOSXPreferencesFile);
 	$synchronized(class$) {
 		$init(MacOSXPreferencesFile);
+		$useLocalCurrentObjectStackCache();
 		bool ok = true;
 		if (MacOSXPreferencesFile::cachedFiles != nullptr && !$nc(MacOSXPreferencesFile::cachedFiles)->isEmpty()) {
 			$var($Iterator, iter, $nc($($nc(MacOSXPreferencesFile::cachedFiles)->values()))->iterator());
@@ -281,6 +284,7 @@ bool MacOSXPreferencesFile::flushUser() {
 	$load(MacOSXPreferencesFile);
 	$synchronized(class$) {
 		$init(MacOSXPreferencesFile);
+		$useLocalCurrentObjectStackCache();
 		bool ok = true;
 		if (MacOSXPreferencesFile::changedFiles != nullptr && !$nc(MacOSXPreferencesFile::changedFiles)->isEmpty()) {
 			$var($Iterator, iterator, $nc(MacOSXPreferencesFile::changedFiles)->iterator());
@@ -303,6 +307,7 @@ bool MacOSXPreferencesFile::flushWorld() {
 	$load(MacOSXPreferencesFile);
 	$synchronized(class$) {
 		$init(MacOSXPreferencesFile);
+		$useLocalCurrentObjectStackCache();
 		bool ok = true;
 		if (MacOSXPreferencesFile::changedFiles != nullptr && !$nc(MacOSXPreferencesFile::changedFiles)->isEmpty()) {
 			{
@@ -341,6 +346,7 @@ int64_t MacOSXPreferencesFile::flushDelay() {
 	$load(MacOSXPreferencesFile);
 	$synchronized(class$) {
 		$init(MacOSXPreferencesFile);
+		$useLocalCurrentObjectStackCache();
 		if (MacOSXPreferencesFile::flushDelay$ == -1) {
 			try {
 				MacOSXPreferencesFile::flushDelay$ = $Math::max(5, $Integer::parseInt($($System::getProperty("java.util.prefs.flushDelay"_s, "60"_s))));
@@ -357,6 +363,7 @@ void MacOSXPreferencesFile::initSyncTimerIfNeeded() {
 	$load(MacOSXPreferencesFile);
 	$synchronized(class$) {
 		$init(MacOSXPreferencesFile);
+		$useLocalCurrentObjectStackCache();
 		if (MacOSXPreferencesFile::syncInterval == -1) {
 			try {
 				MacOSXPreferencesFile::syncInterval = $Integer::parseInt($($System::getProperty("java.util.prefs.syncInterval"_s, "-2"_s)));
@@ -381,6 +388,7 @@ $Timer* MacOSXPreferencesFile::timer() {
 	$load(MacOSXPreferencesFile);
 	$synchronized(class$) {
 		$init(MacOSXPreferencesFile);
+		$useLocalCurrentObjectStackCache();
 		if (MacOSXPreferencesFile::timer$ == nullptr) {
 			$assignStatic(MacOSXPreferencesFile::timer$, $new($Timer, true));
 			$var($Thread, flushThread, $new($MacOSXPreferencesFile$3, nullptr, nullptr, "Flush Thread"_s, 0, false));

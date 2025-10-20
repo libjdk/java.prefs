@@ -88,6 +88,7 @@ void FileSystemPreferences$7::init$($FileSystemPreferences* this$0) {
 }
 
 $Object* FileSystemPreferences$7::run() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		bool var$0 = !$nc(this->this$0->dir)->exists();
 		if (var$0 && !$nc(this->this$0->dir)->mkdirs()) {

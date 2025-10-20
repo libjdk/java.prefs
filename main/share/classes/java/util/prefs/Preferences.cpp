@@ -167,6 +167,7 @@ $Permission* Preferences::prefsPerm = nullptr;
 
 $PreferencesFactory* Preferences::factory() {
 	$init(Preferences);
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	$var($String, factoryName, $cast($String, $AccessController::doPrivileged(static_cast<$PrivilegedAction*>($$new($Preferences$1)))));
 	if (factoryName != nullptr) {
@@ -193,6 +194,7 @@ $PreferencesFactory* Preferences::factory() {
 
 $PreferencesFactory* Preferences::factory1() {
 	$init(Preferences);
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	$load($PreferencesFactory);
 	$var($Iterator, itr, $nc($($ServiceLoader::load($PreferencesFactory::class$, $($ClassLoader::getSystemClassLoader()))))->iterator());
@@ -228,16 +230,19 @@ $PreferencesFactory* Preferences::factory1() {
 
 Preferences* Preferences::userNodeForPackage($Class* c) {
 	$init(Preferences);
+	$useLocalCurrentObjectStackCache();
 	return $nc($(userRoot()))->node($(nodeName(c)));
 }
 
 Preferences* Preferences::systemNodeForPackage($Class* c) {
 	$init(Preferences);
+	$useLocalCurrentObjectStackCache();
 	return $nc($(systemRoot()))->node($(nodeName(c)));
 }
 
 $String* Preferences::nodeName($Class* c) {
 	$init(Preferences);
+	$useLocalCurrentObjectStackCache();
 	if ($nc(c)->isArray()) {
 		$throwNew($IllegalArgumentException, "Arrays have no associated preferences node."_s);
 	}

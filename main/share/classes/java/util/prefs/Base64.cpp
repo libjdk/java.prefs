@@ -88,6 +88,7 @@ $String* Base64::byteArrayToAltBase64($bytes* a) {
 
 $String* Base64::byteArrayToBase64($bytes* a, bool alternate) {
 	$init(Base64);
+	$useLocalCurrentObjectStackCache();
 	int32_t aLen = $nc(a)->length;
 	int32_t numFullGroups = aLen / 3;
 	int32_t numBytesInPartialGroup = aLen - 3 * numFullGroups;
@@ -132,6 +133,7 @@ $bytes* Base64::altBase64ToByteArray($String* s) {
 
 $bytes* Base64::base64ToByteArray($String* s, bool alternate) {
 	$init(Base64);
+	$useLocalCurrentObjectStackCache();
 	$var($bytes, alphaToInt, alternate ? Base64::altBase64ToInt : Base64::base64ToInt);
 	int32_t sLen = $nc(s)->length();
 	int32_t numGroups = sLen / 4;
@@ -175,6 +177,7 @@ $bytes* Base64::base64ToByteArray($String* s, bool alternate) {
 
 int32_t Base64::base64toInt(char16_t c, $bytes* alphaToInt) {
 	$init(Base64);
+	$useLocalCurrentObjectStackCache();
 	int32_t result = $nc(alphaToInt)->get(c);
 	if (result < 0) {
 		$throwNew($IllegalArgumentException, $$str({"Illegal character "_s, $$str(c)}));
@@ -184,6 +187,7 @@ int32_t Base64::base64toInt(char16_t c, $bytes* alphaToInt) {
 
 void Base64::main($StringArray* args) {
 	$init(Base64);
+	$useLocalCurrentObjectStackCache();
 	int32_t numRuns = $Integer::parseInt($nc(args)->get(0));
 	int32_t numBytes = $Integer::parseInt($nc(args)->get(1));
 	$var($Random, rnd, $new($Random));

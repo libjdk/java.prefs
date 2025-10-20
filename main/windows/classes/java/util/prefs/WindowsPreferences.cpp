@@ -297,6 +297,7 @@ $longs* WindowsPreferences::WindowsRegOpenKey(int64_t hKey, $bytes* subKey, int3
 
 $longs* WindowsPreferences::WindowsRegOpenKey1(int64_t hKey, $bytes* subKey, int32_t securityMask) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($longs, result, WindowsRegOpenKey(hKey, subKey, securityMask));
 	if ($nc(result)->get(WindowsPreferences::ERROR_CODE) == WindowsPreferences::ERROR_SUCCESS) {
 		return result;
@@ -346,6 +347,7 @@ $longs* WindowsPreferences::WindowsRegCreateKeyEx(int64_t hKey, $bytes* subKey) 
 
 $longs* WindowsPreferences::WindowsRegCreateKeyEx1(int64_t hKey, $bytes* subKey) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($longs, result, WindowsRegCreateKeyEx(hKey, subKey));
 	if ($nc(result)->get(WindowsPreferences::ERROR_CODE) == WindowsPreferences::ERROR_SUCCESS) {
 		return result;
@@ -388,6 +390,7 @@ int32_t WindowsPreferences::WindowsRegFlushKey(int64_t hKey) {
 
 int32_t WindowsPreferences::WindowsRegFlushKey1(int64_t hKey) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	int32_t result = WindowsRegFlushKey(hKey);
 	if (result == WindowsPreferences::ERROR_SUCCESS) {
 		return result;
@@ -430,6 +433,7 @@ int32_t WindowsPreferences::WindowsRegSetValueEx(int64_t hKey, $bytes* valueName
 
 int32_t WindowsPreferences::WindowsRegSetValueEx1(int64_t hKey, $bytes* valueName, $bytes* value) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	int32_t result = WindowsRegSetValueEx(hKey, valueName, value);
 	if (result == WindowsPreferences::ERROR_SUCCESS) {
 		return result;
@@ -472,6 +476,7 @@ $longs* WindowsPreferences::WindowsRegQueryInfoKey(int64_t hKey) {
 
 $longs* WindowsPreferences::WindowsRegQueryInfoKey1(int64_t hKey) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($longs, result, WindowsRegQueryInfoKey(hKey));
 	if ($nc(result)->get(WindowsPreferences::ERROR_CODE) == WindowsPreferences::ERROR_SUCCESS) {
 		return result;
@@ -505,6 +510,7 @@ $bytes* WindowsPreferences::WindowsRegEnumKeyEx(int64_t hKey, int32_t subKeyInde
 
 $bytes* WindowsPreferences::WindowsRegEnumKeyEx1(int64_t hKey, int32_t subKeyIndex, int32_t maxKeyLength) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($bytes, result, WindowsRegEnumKeyEx(hKey, subKeyIndex, maxKeyLength));
 	if (result != nullptr) {
 		return result;
@@ -538,6 +544,7 @@ $bytes* WindowsPreferences::WindowsRegEnumValue(int64_t hKey, int32_t valueIndex
 
 $bytes* WindowsPreferences::WindowsRegEnumValue1(int64_t hKey, int32_t valueIndex, int32_t maxValueNameLength) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($bytes, result, WindowsRegEnumValue(hKey, valueIndex, maxValueNameLength));
 	if (result != nullptr) {
 		return result;
@@ -561,6 +568,7 @@ $bytes* WindowsPreferences::WindowsRegEnumValue1(int64_t hKey, int32_t valueInde
 }
 
 void WindowsPreferences::init$(WindowsPreferences* parent, $String* name) {
+	$useLocalCurrentObjectStackCache();
 	$AbstractPreferences::init$(parent, name);
 	this->isBackingStoreAvailable = true;
 	int64_t parentNativeHandle = $nc(parent)->openKey(WindowsPreferences::KEY_CREATE_SUB_KEY, WindowsPreferences::KEY_READ);
@@ -584,6 +592,7 @@ void WindowsPreferences::init$(WindowsPreferences* parent, $String* name) {
 }
 
 void WindowsPreferences::init$(int64_t rootNativeHandle, $bytes* rootDirectory) {
+	$useLocalCurrentObjectStackCache();
 	$AbstractPreferences::init$(nullptr, ""_s);
 	this->isBackingStoreAvailable = true;
 	$var($longs, result, WindowsRegCreateKeyEx1(rootNativeHandle, rootDirectory));
@@ -601,6 +610,7 @@ void WindowsPreferences::init$(int64_t rootNativeHandle, $bytes* rootDirectory) 
 }
 
 $bytes* WindowsPreferences::windowsAbsolutePath() {
+	$useLocalCurrentObjectStackCache();
 	$var($ByteArrayOutputStream, bstream, $new($ByteArrayOutputStream));
 	bstream->write(WindowsPreferences::WINDOWS_ROOT_PATH, 0, $nc(WindowsPreferences::WINDOWS_ROOT_PATH)->length - 1);
 	$var($StringTokenizer, tokenizer, $new($StringTokenizer, $(absolutePath()), "/"_s));
@@ -623,6 +633,7 @@ int64_t WindowsPreferences::openKey(int32_t mask1, int32_t mask2) {
 }
 
 int64_t WindowsPreferences::openKey($bytes* windowsAbsolutePath, int32_t mask1, int32_t mask2) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(windowsAbsolutePath)->length <= WindowsPreferences::MAX_WINDOWS_PATH_LENGTH + 1) {
 		$var($longs, result, WindowsRegOpenKey1(rootNativeHandle(), windowsAbsolutePath, mask1));
 		if ($nc(result)->get(WindowsPreferences::ERROR_CODE) == WindowsPreferences::ERROR_ACCESS_DENIED && mask2 != mask1) {
@@ -648,6 +659,7 @@ int64_t WindowsPreferences::openKey($bytes* windowsAbsolutePath, int32_t mask1, 
 }
 
 int64_t WindowsPreferences::openKey(int64_t nativeHandle, $bytes* windowsRelativePath, int32_t mask1, int32_t mask2) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(windowsRelativePath)->length <= WindowsPreferences::MAX_WINDOWS_PATH_LENGTH + 1) {
 		$var($longs, result, WindowsRegOpenKey1(nativeHandle, windowsRelativePath, mask1));
 		if ($nc(result)->get(WindowsPreferences::ERROR_CODE) == WindowsPreferences::ERROR_ACCESS_DENIED && mask2 != mask1) {
@@ -686,6 +698,7 @@ int64_t WindowsPreferences::openKey(int64_t nativeHandle, $bytes* windowsRelativ
 }
 
 void WindowsPreferences::closeKey(int64_t nativeHandle) {
+	$useLocalCurrentObjectStackCache();
 	int32_t result = WindowsRegCloseKey(nativeHandle);
 	if (result != WindowsPreferences::ERROR_SUCCESS) {
 		$var($String, var$3, $$str({"Could not close windows registry node "_s, $(byteArrayToString($(windowsAbsolutePath()))), " at root 0x"_s}));
@@ -697,6 +710,7 @@ void WindowsPreferences::closeKey(int64_t nativeHandle) {
 }
 
 void WindowsPreferences::putSpi($String* javaName, $String* value) {
+	$useLocalCurrentObjectStackCache();
 	int64_t nativeHandle = openKey(WindowsPreferences::KEY_SET_VALUE);
 	if (nativeHandle == WindowsPreferences::NULL_NATIVE_HANDLE) {
 		this->isBackingStoreAvailable = false;
@@ -719,6 +733,7 @@ void WindowsPreferences::putSpi($String* javaName, $String* value) {
 }
 
 $String* WindowsPreferences::getSpi($String* javaName) {
+	$useLocalCurrentObjectStackCache();
 	int64_t nativeHandle = openKey(WindowsPreferences::KEY_QUERY_VALUE);
 	if (nativeHandle == WindowsPreferences::NULL_NATIVE_HANDLE) {
 		return nullptr;
@@ -733,6 +748,7 @@ $String* WindowsPreferences::getSpi($String* javaName) {
 }
 
 void WindowsPreferences::removeSpi($String* key) {
+	$useLocalCurrentObjectStackCache();
 	int64_t nativeHandle = openKey(WindowsPreferences::KEY_SET_VALUE);
 	if (nativeHandle == WindowsPreferences::NULL_NATIVE_HANDLE) {
 		return;
@@ -752,6 +768,7 @@ void WindowsPreferences::removeSpi($String* key) {
 }
 
 $StringArray* WindowsPreferences::keysSpi() {
+	$useLocalCurrentObjectStackCache();
 	int64_t nativeHandle = openKey(WindowsPreferences::KEY_QUERY_VALUE);
 	if (nativeHandle == WindowsPreferences::NULL_NATIVE_HANDLE) {
 		$var($String, var$1, $$str({"Could not open windows registry node "_s, $(byteArrayToString($(windowsAbsolutePath()))), " at root 0x"_s}));
@@ -791,6 +808,7 @@ $StringArray* WindowsPreferences::keysSpi() {
 }
 
 $StringArray* WindowsPreferences::childrenNamesSpi() {
+	$useLocalCurrentObjectStackCache();
 	int64_t nativeHandle = openKey(WindowsPreferences::KEY_ENUMERATE_SUB_KEYS | WindowsPreferences::KEY_QUERY_VALUE);
 	if (nativeHandle == WindowsPreferences::NULL_NATIVE_HANDLE) {
 		$var($String, var$1, $$str({"Could not open windows registry node "_s, $(byteArrayToString($(windowsAbsolutePath()))), " at root 0x"_s}));
@@ -832,6 +850,7 @@ $StringArray* WindowsPreferences::childrenNamesSpi() {
 }
 
 void WindowsPreferences::flush() {
+	$useLocalCurrentObjectStackCache();
 	if (isRemoved()) {
 		$nc(this->parent$)->flush();
 		return;
@@ -870,6 +889,7 @@ $AbstractPreferences* WindowsPreferences::childSpi($String* name) {
 }
 
 void WindowsPreferences::removeNodeSpi() {
+	$useLocalCurrentObjectStackCache();
 	int64_t parentNativeHandle = $nc(($cast(WindowsPreferences, $(parent()))))->openKey(WindowsPreferences::DELETE);
 	if (parentNativeHandle == WindowsPreferences::NULL_NATIVE_HANDLE) {
 		$var($String, var$1, $$str({"Could not open parent windows registry node of "_s, $(byteArrayToString($(windowsAbsolutePath()))), " at root 0x"_s}));
@@ -891,6 +911,7 @@ void WindowsPreferences::removeNodeSpi() {
 
 $String* WindowsPreferences::toJavaName($bytes* windowsNameArray) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($String, windowsName, byteArrayToString(windowsNameArray));
 	bool var$0 = ($nc(windowsName)->length() > 1);
 	if (var$0 && ($(windowsName->substring(0, 2))->equals("/!"_s))) {
@@ -919,6 +940,7 @@ $String* WindowsPreferences::toJavaName($bytes* windowsNameArray) {
 
 $String* WindowsPreferences::toJavaAlt64Name($String* windowsName) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($bytes, byteBuffer, $Base64::altBase64ToByteArray($($nc(windowsName)->substring(2))));
 	$var($StringBuilder, result, $new($StringBuilder));
 	for (int32_t i = 0; i < $nc(byteBuffer)->length; ++i) {
@@ -931,6 +953,7 @@ $String* WindowsPreferences::toJavaAlt64Name($String* windowsName) {
 
 $bytes* WindowsPreferences::toWindowsName($String* javaName) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, windowsName, $new($StringBuilder));
 	for (int32_t i = 0; i < $nc(javaName)->length(); ++i) {
 		char16_t ch = javaName->charAt(i);
@@ -952,6 +975,7 @@ $bytes* WindowsPreferences::toWindowsName($String* javaName) {
 
 $bytes* WindowsPreferences::toWindowsAlt64Name($String* javaName) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($bytes, javaNameArray, $new($bytes, 2 * $nc(javaName)->length()));
 	int32_t counter = 0;
 	for (int32_t i = 0; i < javaName->length(); ++i) {
@@ -964,6 +988,7 @@ $bytes* WindowsPreferences::toWindowsAlt64Name($String* javaName) {
 
 $String* WindowsPreferences::toJavaValueString($bytes* windowsNameArray) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($String, windowsName, byteArrayToString(windowsNameArray));
 	$var($StringBuilder, javaName, $new($StringBuilder));
 	char16_t ch = 0;
@@ -998,6 +1023,7 @@ $String* WindowsPreferences::toJavaValueString($bytes* windowsNameArray) {
 
 $bytes* WindowsPreferences::toWindowsValueString($String* javaName) {
 	$init(WindowsPreferences);
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, windowsName, $new($StringBuilder));
 	for (int32_t i = 0; i < $nc(javaName)->length(); ++i) {
 		char16_t ch = javaName->charAt(i);

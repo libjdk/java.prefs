@@ -79,6 +79,7 @@ void AbstractPreferences$EventDispatchThread::init$() {
 }
 
 void AbstractPreferences$EventDispatchThread::run() {
+	$useLocalCurrentObjectStackCache();
 	while (true) {
 		$var($EventObject, event, nullptr);
 		$init($AbstractPreferences);

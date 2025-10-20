@@ -83,6 +83,7 @@ void FileSystemPreferences$8::init$($FileSystemPreferences* this$0) {
 }
 
 $Object* FileSystemPreferences$8::run() {
+	$useLocalCurrentObjectStackCache();
 	$var($List, result, $new($ArrayList));
 	$var($FileArray, dirContents, $nc(this->this$0->dir)->listFiles());
 	if (dirContents != nullptr) {

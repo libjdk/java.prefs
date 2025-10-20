@@ -179,6 +179,7 @@ void XmlSupport::init$() {
 
 void XmlSupport::export$($OutputStream* os, $Preferences* p, bool subTree) {
 	$init(XmlSupport);
+	$useLocalCurrentObjectStackCache();
 	if ($nc(($cast($AbstractPreferences, p)))->isRemoved()) {
 		$throwNew($IllegalStateException, "Node has been removed"_s);
 	}
@@ -207,6 +208,7 @@ void XmlSupport::export$($OutputStream* os, $Preferences* p, bool subTree) {
 
 void XmlSupport::putPreferencesInXml($Element* elt, $Document* doc, $Preferences* prefs, bool subTree) {
 	$init(XmlSupport);
+	$useLocalCurrentObjectStackCache();
 	$var($PreferencesArray, kidsCopy, nullptr);
 	$var($StringArray, kidNames, nullptr);
 	$synchronized($nc(($cast($AbstractPreferences, prefs)))->lock) {
@@ -248,6 +250,7 @@ void XmlSupport::putPreferencesInXml($Element* elt, $Document* doc, $Preferences
 
 void XmlSupport::importPreferences($InputStream* is) {
 	$init(XmlSupport);
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($Document, doc, loadPrefsDoc(is));
 		$var($String, xmlVersion, $nc($($nc(doc)->getDocumentElement()))->getAttribute("EXTERNAL_XML_VERSION"_s));
@@ -265,6 +268,7 @@ void XmlSupport::importPreferences($InputStream* is) {
 
 $Document* XmlSupport::createPrefsDoc($String* qname) {
 	$init(XmlSupport);
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($DOMImplementation, di, $nc($($nc($($DocumentBuilderFactory::newInstance()))->newDocumentBuilder()))->getDOMImplementation());
 		$var($DocumentType, dt, $nc(di)->createDocumentType(qname, nullptr, XmlSupport::PREFS_DTD_URI));
@@ -278,6 +282,7 @@ $Document* XmlSupport::createPrefsDoc($String* qname) {
 
 $Document* XmlSupport::loadPrefsDoc($InputStream* in) {
 	$init(XmlSupport);
+	$useLocalCurrentObjectStackCache();
 	$var($DocumentBuilderFactory, dbf, $DocumentBuilderFactory::newInstance());
 	$nc(dbf)->setIgnoringElementContentWhitespace(true);
 	dbf->setValidating(true);
@@ -297,6 +302,7 @@ $Document* XmlSupport::loadPrefsDoc($InputStream* in) {
 
 void XmlSupport::writeDoc($Document* doc, $OutputStream* out) {
 	$init(XmlSupport);
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($TransformerFactory, tf, $TransformerFactory::newInstance());
 		try {
@@ -319,6 +325,7 @@ void XmlSupport::writeDoc($Document* doc, $OutputStream* out) {
 
 void XmlSupport::ImportSubtree($Preferences* prefsNode, $Element* xmlNode) {
 	$init(XmlSupport);
+	$useLocalCurrentObjectStackCache();
 	$var($NodeList, xmlKids, $nc(xmlNode)->getChildNodes());
 	int32_t numXmlKids = $nc(xmlKids)->getLength();
 	$var($PreferencesArray, prefsKids, nullptr);
@@ -341,6 +348,7 @@ void XmlSupport::ImportSubtree($Preferences* prefsNode, $Element* xmlNode) {
 
 void XmlSupport::ImportPrefs($Preferences* prefsNode, $Element* map) {
 	$init(XmlSupport);
+	$useLocalCurrentObjectStackCache();
 	$var($NodeList, entries, $nc(map)->getChildNodes());
 	{
 		int32_t i = 0;
@@ -355,6 +363,7 @@ void XmlSupport::ImportPrefs($Preferences* prefsNode, $Element* map) {
 
 void XmlSupport::exportMap($OutputStream* os, $Map* map) {
 	$init(XmlSupport);
+	$useLocalCurrentObjectStackCache();
 	$var($Document, doc, createPrefsDoc("map"_s));
 	$var($Element, xmlMap, $nc(doc)->getDocumentElement());
 	$nc(xmlMap)->setAttribute("MAP_XML_VERSION"_s, XmlSupport::MAP_XML_VERSION);
@@ -374,6 +383,7 @@ void XmlSupport::exportMap($OutputStream* os, $Map* map) {
 
 void XmlSupport::importMap($InputStream* is, $Map* m) {
 	$init(XmlSupport);
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($Document, doc, loadPrefsDoc(is));
 		$var($Element, xmlMap, $nc(doc)->getDocumentElement());

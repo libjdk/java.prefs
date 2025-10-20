@@ -169,6 +169,7 @@ void MacOSXPreferences::removeSpi($String* key) {
 }
 
 void MacOSXPreferences::removeNodeSpi() {
+	$useLocalCurrentObjectStackCache();
 	$load($MacOSXPreferencesFile);
 	$synchronized($MacOSXPreferencesFile::class$) {
 		$nc(($cast(MacOSXPreferences, $(parent()))))->removeChild($(name()));
@@ -181,6 +182,7 @@ void MacOSXPreferences::removeChild($String* child) {
 }
 
 $StringArray* MacOSXPreferences::childrenNamesSpi() {
+	$useLocalCurrentObjectStackCache();
 	$var($StringArray, result, $nc(this->file)->getChildrenForNode(this->path));
 	if (result == nullptr) {
 		$throwNew($BackingStoreException, $$str({"Couldn\'t get list of children for node \'"_s, this->path, "\'"_s}));
@@ -189,6 +191,7 @@ $StringArray* MacOSXPreferences::childrenNamesSpi() {
 }
 
 $StringArray* MacOSXPreferences::keysSpi() {
+	$useLocalCurrentObjectStackCache();
 	$var($StringArray, result, $nc(this->file)->getKeysForNode(this->path));
 	if (result == nullptr) {
 		$throwNew($BackingStoreException, $$str({"Couldn\'t get list of keys for node \'"_s, this->path, "\'"_s}));
@@ -205,6 +208,7 @@ $AbstractPreferences* MacOSXPreferences::childSpi($String* name) {
 }
 
 void MacOSXPreferences::flush() {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->lock) {
 		if (this->isUser) {
 			if (!$MacOSXPreferencesFile::flushUser()) {
@@ -220,6 +224,7 @@ void MacOSXPreferences::flushSpi() {
 }
 
 void MacOSXPreferences::sync() {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->lock) {
 		if (isRemoved()) {
 			$throwNew($IllegalStateException, "Node has been removed"_s);

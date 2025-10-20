@@ -73,6 +73,7 @@ void FileSystemPreferences$4::init$() {
 }
 
 $Object* FileSystemPreferences$4::run() {
+	$useLocalCurrentObjectStackCache();
 	$nc($($Runtime::getRuntime()))->addShutdownHook($$new($FileSystemPreferences$4$1, this, nullptr, nullptr, "Sync Timer Thread"_s, 0, false));
 	return $of(nullptr);
 }

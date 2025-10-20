@@ -226,6 +226,7 @@ $List* AbstractPreferences::eventQueue = nullptr;
 $Thread* AbstractPreferences::eventDispatchThread = nullptr;
 
 void AbstractPreferences::init$(AbstractPreferences* parent, $String* name) {
+	$useLocalCurrentObjectStackCache();
 	$Preferences::init$();
 	this->newNode = false;
 	$set(this, kidCache, $new($HashMap));
@@ -254,6 +255,7 @@ void AbstractPreferences::init$(AbstractPreferences* parent, $String* name) {
 }
 
 void AbstractPreferences::put($String* key, $String* value) {
+	$useLocalCurrentObjectStackCache();
 	if (key == nullptr || value == nullptr) {
 		$throwNew($NullPointerException);
 	}
@@ -314,6 +316,7 @@ void AbstractPreferences::remove($String* key) {
 }
 
 void AbstractPreferences::clear() {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->lock) {
 		{
 			$var($StringArray, arr$, keys());
@@ -417,6 +420,7 @@ void AbstractPreferences::putByteArray($String* key, $bytes* value) {
 }
 
 $bytes* AbstractPreferences::getByteArray($String* key, $bytes* def) {
+	$useLocalCurrentObjectStackCache();
 	$var($bytes, result, def);
 	$var($String, value, get(key, nullptr));
 	try {
@@ -439,6 +443,7 @@ $StringArray* AbstractPreferences::keys() {
 }
 
 $StringArray* AbstractPreferences::childrenNames() {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->lock) {
 		if (this->removed) {
 			$throwNew($IllegalStateException, "Node has been removed."_s);
@@ -471,6 +476,7 @@ $Preferences* AbstractPreferences::parent() {
 }
 
 $Preferences* AbstractPreferences::node($String* path) {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->lock) {
 		if (this->removed) {
 			$throwNew($IllegalStateException, "Node has been removed."_s);
@@ -489,6 +495,7 @@ $Preferences* AbstractPreferences::node($String* path) {
 }
 
 $Preferences* AbstractPreferences::node($StringTokenizer* path) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, token, $nc(path)->nextToken());
 	if ($nc(token)->equals("/"_s)) {
 		$throwNew($IllegalArgumentException, "Consecutive slashes in path"_s);
@@ -517,6 +524,7 @@ $Preferences* AbstractPreferences::node($StringTokenizer* path) {
 }
 
 bool AbstractPreferences::nodeExists($String* path) {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->lock) {
 		if ($nc(path)->isEmpty()) {
 			return !this->removed;
@@ -535,6 +543,7 @@ bool AbstractPreferences::nodeExists($String* path) {
 }
 
 bool AbstractPreferences::nodeExists($StringTokenizer* path) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, token, $nc(path)->nextToken());
 	if ($nc(token)->equals("/"_s)) {
 		$throwNew($IllegalArgumentException, "Consecutive slashes in path"_s);
@@ -569,6 +578,7 @@ void AbstractPreferences::removeNode() {
 }
 
 void AbstractPreferences::removeNode2() {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->lock) {
 		if (this->removed) {
 			$throwNew($IllegalStateException, "Node already removed."_s);
@@ -611,6 +621,7 @@ $String* AbstractPreferences::absolutePath() {
 }
 
 bool AbstractPreferences::isUserNode() {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	return $nc(($cast($Boolean, $($AccessController::doPrivileged(static_cast<$PrivilegedAction*>($$new($AbstractPreferences$1, this)))))))->booleanValue();
 }
@@ -704,6 +715,7 @@ void AbstractPreferences::removeNodeChangeListener($NodeChangeListener* ncl) {
 }
 
 AbstractPreferences* AbstractPreferences::getChild($String* nodeName) {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->lock) {
 		$var($StringArray, kidNames, childrenNames());
 		{
@@ -722,6 +734,7 @@ AbstractPreferences* AbstractPreferences::getChild($String* nodeName) {
 }
 
 $String* AbstractPreferences::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$0, $$str({(this->isUserNode() ? "User"_s : "System"_s), " Preference Node: "_s}));
 	return $concat(var$0, $(this->absolutePath()));
 }
@@ -731,6 +744,7 @@ void AbstractPreferences::sync() {
 }
 
 void AbstractPreferences::sync2() {
+	$useLocalCurrentObjectStackCache();
 	$var($AbstractPreferencesArray, cachedKids, nullptr);
 	$synchronized(this->lock) {
 		if (this->removed) {
@@ -755,6 +769,7 @@ void AbstractPreferences::flush() {
 }
 
 void AbstractPreferences::flush2() {
+	$useLocalCurrentObjectStackCache();
 	$var($AbstractPreferencesArray, cachedKids, nullptr);
 	$synchronized(this->lock) {
 		flushSpi();

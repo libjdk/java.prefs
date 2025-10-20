@@ -73,6 +73,7 @@ void FileSystemPreferences$1::init$() {
 }
 
 $Object* FileSystemPreferences$1::run() {
+	$useLocalCurrentObjectStackCache();
 	$init($FileSystemPreferences);
 	$assignStatic($FileSystemPreferences::userRootDir, $new($File, $($System::getProperty("java.util.prefs.userRoot"_s, $($System::getProperty("user.home"_s)))), ".java/.userPrefs"_s));
 	if (!$nc($FileSystemPreferences::userRootDir)->exists()) {

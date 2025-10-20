@@ -71,6 +71,7 @@ void FileSystemPreferences$2::init$() {
 }
 
 $Object* FileSystemPreferences$2::run() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, systemPrefsDirName, $System::getProperty("java.util.prefs.systemRoot"_s, "/etc/.java"_s));
 	$init($FileSystemPreferences);
 	$assignStatic($FileSystemPreferences::systemRootDir, $new($File, systemPrefsDirName, ".systemPrefs"_s));

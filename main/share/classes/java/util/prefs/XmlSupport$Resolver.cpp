@@ -63,6 +63,7 @@ void XmlSupport$Resolver::init$() {
 }
 
 $InputSource* XmlSupport$Resolver::resolveEntity($String* pid, $String* sid) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(sid)->equals("http://java.sun.com/dtd/preferences.dtd"_s)) {
 		$var($InputSource, is, nullptr);
 		$assign(is, $new($InputSource, static_cast<$Reader*>($$new($StringReader, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!-- DTD for preferences --><!ELEMENT preferences (root) ><!ATTLIST preferences EXTERNAL_XML_VERSION CDATA \"0.0\"  ><!ELEMENT root (map, node*) ><!ATTLIST root          type (system|user) #REQUIRED ><!ELEMENT node (map, node*) ><!ATTLIST node          name CDATA #REQUIRED ><!ELEMENT map (entry*) ><!ATTLIST map  MAP_XML_VERSION CDATA \"0.0\"  ><!ELEMENT entry EMPTY ><!ATTLIST entry          key CDATA #REQUIRED          value CDATA #REQUIRED >"_s))));

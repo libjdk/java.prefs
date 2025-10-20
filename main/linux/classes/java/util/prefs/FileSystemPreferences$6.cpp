@@ -98,6 +98,7 @@ void FileSystemPreferences$6::init$($FileSystemPreferences* this$0) {
 }
 
 $Object* FileSystemPreferences$6::run() {
+	$useLocalCurrentObjectStackCache();
 	$var($Map, m, static_cast<$Map*>(static_cast<$AbstractMap*>($new($TreeMap))));
 	int64_t newLastSyncTime = 0;
 	try {

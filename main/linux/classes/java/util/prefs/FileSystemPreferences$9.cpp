@@ -85,6 +85,7 @@ void FileSystemPreferences$9::init$($FileSystemPreferences* this$0) {
 }
 
 $Object* FileSystemPreferences$9::run() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->this$0->changeLog)->contains(this->this$0->nodeCreate)) {
 		$nc(this->this$0->changeLog)->remove($of(this->this$0->nodeCreate));
 		$set(this->this$0, nodeCreate, nullptr);
