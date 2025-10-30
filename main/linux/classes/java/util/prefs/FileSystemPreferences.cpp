@@ -3,33 +3,16 @@
 #include <java/io/File.h>
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InterruptedException.h>
-#include <java/lang/Long.h>
 #include <java/lang/Math.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
 #include <java/lang/SecurityException.h>
-#include <java/lang/String.h>
 #include <java/lang/StringBuffer.h>
-#include <java/lang/System.h>
-#include <java/lang/Thread.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/security/AccessController.h>
 #include <java/security/PrivilegedAction.h>
 #include <java/security/PrivilegedActionException.h>
@@ -332,41 +315,26 @@ $Object* allocate$FileSystemPreferences($Class* clazz) {
 	return $of($alloc(FileSystemPreferences));
 }
 
-
 int32_t FileSystemPreferences::SYNC_INTERVAL = 0;
-
 $File* FileSystemPreferences::systemRootDir = nullptr;
 bool FileSystemPreferences::isSystemRootWritable = false;
-
 $File* FileSystemPreferences::userRootDir = nullptr;
 bool FileSystemPreferences::isUserRootWritable = false;
-
 $volatile($Preferences*) FileSystemPreferences::userRoot = nullptr;
-
 $volatile($Preferences*) FileSystemPreferences::systemRoot = nullptr;
-
 $File* FileSystemPreferences::userLockFile = nullptr;
-
 $File* FileSystemPreferences::systemLockFile = nullptr;
-
 int32_t FileSystemPreferences::userRootLockHandle = 0;
-
 int32_t FileSystemPreferences::systemRootLockHandle = 0;
-
 $File* FileSystemPreferences::userRootModFile = nullptr;
-
 bool FileSystemPreferences::isUserRootModified = false;
-
 int64_t FileSystemPreferences::userRootModTime = 0;
 $File* FileSystemPreferences::systemRootModFile = nullptr;
 bool FileSystemPreferences::isSystemRootModified = false;
-
 int64_t FileSystemPreferences::systemRootModTime = 0;
 $Timer* FileSystemPreferences::syncTimer = nullptr;
 $StringArray* FileSystemPreferences::EMPTY_STRING_ARRAY = nullptr;
-
 int32_t FileSystemPreferences::INIT_SLEEP_TIME = 0;
-
 int32_t FileSystemPreferences::MAX_ATTEMPTS = 0;
 
 $PlatformLogger* FileSystemPreferences::getLogger() {
@@ -440,16 +408,14 @@ void FileSystemPreferences::syncWorld() {
 		if (userRt != nullptr) {
 			userRt->flush();
 		}
-	} catch ($BackingStoreException&) {
-		$var($BackingStoreException, e, $catch());
+	} catch ($BackingStoreException& e) {
 		$nc($(getLogger()))->warning($$str({"Couldn\'t flush user prefs: "_s, e}));
 	}
 	try {
 		if (systemRt != nullptr) {
 			systemRt->flush();
 		}
-	} catch ($BackingStoreException&) {
-		$var($BackingStoreException, e, $catch());
+	} catch ($BackingStoreException& e) {
 		$nc($(getLogger()))->warning($$str({"Couldn\'t flush system prefs: "_s, e}));
 	}
 }
@@ -513,8 +479,7 @@ void FileSystemPreferences::initCacheIfNecessary() {
 	}
 	try {
 		loadCache();
-	} catch ($Exception&) {
-		$var($Exception, e, $catch());
+	} catch ($Exception& e) {
 		$set(this, prefsCache, static_cast<$Map*>(static_cast<$AbstractMap*>($new($TreeMap))));
 	}
 }
@@ -524,8 +489,7 @@ void FileSystemPreferences::loadCache() {
 	$beforeCallerSensitive();
 	try {
 		$AccessController::doPrivileged(static_cast<$PrivilegedExceptionAction*>($$new($FileSystemPreferences$6, this)));
-	} catch ($PrivilegedActionException&) {
-		$var($PrivilegedActionException, e, $catch());
+	} catch ($PrivilegedActionException& e) {
 		$throw($cast($BackingStoreException, $(e->getException())));
 	}
 }
@@ -535,8 +499,7 @@ void FileSystemPreferences::writeBackCache() {
 	$beforeCallerSensitive();
 	try {
 		$AccessController::doPrivileged(static_cast<$PrivilegedExceptionAction*>($$new($FileSystemPreferences$7, this)));
-	} catch ($PrivilegedActionException&) {
-		$var($PrivilegedActionException, e, $catch());
+	} catch ($PrivilegedActionException& e) {
 		$throw($cast($BackingStoreException, $(e->getException())));
 	}
 }
@@ -566,8 +529,8 @@ void FileSystemPreferences::removeNode() {
 			$var($Throwable, var$0, nullptr);
 			try {
 				$AbstractPreferences::removeNode();
-			} catch ($Throwable&) {
-				$assign(var$0, $catch());
+			} catch ($Throwable& var$1) {
+				$assign(var$0, var$1);
 			} /*finally*/ {
 				unlockFile();
 			}
@@ -583,8 +546,7 @@ void FileSystemPreferences::removeNodeSpi() {
 	$beforeCallerSensitive();
 	try {
 		$AccessController::doPrivileged(static_cast<$PrivilegedExceptionAction*>($$new($FileSystemPreferences$9, this)));
-	} catch ($PrivilegedActionException&) {
-		$var($PrivilegedActionException, e, $catch());
+	} catch ($PrivilegedActionException& e) {
 		$throw($cast($BackingStoreException, $(e->getException())));
 	}
 }
@@ -610,8 +572,8 @@ void FileSystemPreferences::sync() {
 				try {
 					$AbstractPreferences::sync();
 					$AccessController::doPrivileged(static_cast<$PrivilegedAction*>($$new($FileSystemPreferences$11, this, newModTime)));
-				} catch ($Throwable&) {
-					$assign(var$0, $catch());
+				} catch ($Throwable& var$1) {
+					$assign(var$0, var$1);
 				} /*finally*/ {
 					unlockFile();
 				}
@@ -628,8 +590,7 @@ void FileSystemPreferences::syncSpi() {
 	$beforeCallerSensitive();
 	try {
 		$AccessController::doPrivileged(static_cast<$PrivilegedExceptionAction*>($$new($FileSystemPreferences$12, this)));
-	} catch ($PrivilegedActionException&) {
-		$var($PrivilegedActionException, e, $catch());
+	} catch ($PrivilegedActionException& e) {
 		$throw($cast($BackingStoreException, $(e->getException())));
 	}
 }
@@ -746,13 +707,11 @@ bool FileSystemPreferences::lockFile(bool shared) {
 				}
 				return true;
 			}
-		} catch ($IOException&) {
-			$catch();
+		} catch ($IOException& e) {
 		}
 		try {
 			$Thread::sleep(sleepTime);
-		} catch ($InterruptedException&) {
-			$var($InterruptedException, e, $catch());
+		} catch ($InterruptedException& e) {
 			checkLockFile0ErrorCode(errorCode);
 			return false;
 		}

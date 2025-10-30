@@ -3,25 +3,11 @@
 #include <java/io/InputStream.h>
 #include <java/io/OutputStream.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
 #include <java/lang/ClassLoader.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
 #include <java/lang/RuntimePermission.h>
 #include <java/lang/SecurityException.h>
 #include <java/lang/SecurityManager.h>
-#include <java/lang/String.h>
-#include <java/lang/System.h>
-#include <java/lang/Thread.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/security/AccessController.h>
 #include <java/security/AllPermission.h>
 #include <java/security/BasicPermission.h>
@@ -162,7 +148,6 @@ $String* Preferences::toString() {
 }
 
 $PreferencesFactory* Preferences::factory$ = nullptr;
-
 $Permission* Preferences::prefsPerm = nullptr;
 
 $PreferencesFactory* Preferences::factory() {
@@ -174,8 +159,7 @@ $PreferencesFactory* Preferences::factory() {
 		try {
 			$var($Object, result, $Class::forName(factoryName, false, $($ClassLoader::getSystemClassLoader()))->newInstance());
 			return $cast($PreferencesFactory, result);
-		} catch ($Exception&) {
-			$var($Exception, ex, $catch());
+		} catch ($Exception& ex) {
 			try {
 				$var($SecurityManager, sm, $System::getSecurityManager());
 				if (sm != nullptr) {
@@ -183,8 +167,7 @@ $PreferencesFactory* Preferences::factory() {
 				}
 				$var($Object, result, $Class::forName(factoryName, false, $($($Thread::currentThread())->getContextClassLoader()))->newInstance());
 				return $cast($PreferencesFactory, result);
-			} catch ($Exception&) {
-				$var($Exception, e, $catch());
+			} catch ($Exception& e) {
 				$throwNew($InternalError, $$str({"Can\'t instantiate Preferences factory "_s, factoryName}), e);
 			}
 		}
@@ -201,8 +184,7 @@ $PreferencesFactory* Preferences::factory1() {
 	while ($nc(itr)->hasNext()) {
 		try {
 			return $cast($PreferencesFactory, itr->next());
-		} catch ($ServiceConfigurationError&) {
-			$var($ServiceConfigurationError, sce, $catch());
+		} catch ($ServiceConfigurationError& sce) {
 			if ($instanceOf($SecurityException, $(sce->getCause()))) {
 				continue;
 			}
@@ -221,8 +203,7 @@ $PreferencesFactory* Preferences::factory1() {
 	try {
 		$var($Object, result, $Class::forName(platformFactory, false, $(Preferences::class$->getClassLoader()))->newInstance());
 		return $cast($PreferencesFactory, result);
-	} catch ($Exception&) {
-		$var($Exception, e, $catch());
+	} catch ($Exception& e) {
 		$throwNew($InternalError, $$str({"Can\'t instantiate platform default Preferences factory "_s, platformFactory}), e);
 	}
 	$shouldNotReachHere();

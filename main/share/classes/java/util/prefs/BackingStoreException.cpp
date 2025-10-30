@@ -1,14 +1,5 @@
 #include <java/util/prefs/BackingStoreException.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jcpp.h>
 
 using $ClassInfo = ::java::lang::ClassInfo;
@@ -55,16 +46,10 @@ void BackingStoreException::init$($Throwable* cause) {
 BackingStoreException::BackingStoreException() {
 }
 
-BackingStoreException::BackingStoreException(const BackingStoreException& e) {
+BackingStoreException::BackingStoreException(const BackingStoreException& e) : $Exception(e) {
 }
 
-BackingStoreException BackingStoreException::wrapper$() {
-	$pendingException(this);
-	return *this;
-}
-
-void BackingStoreException::throwWrapper$() {
-	$pendingException(this);
+void BackingStoreException::throw$() {
 	throw *this;
 }
 

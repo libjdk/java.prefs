@@ -1,29 +1,9 @@
 #include <java/util/prefs/AbstractPreferences.h>
 
 #include <java/io/OutputStream.h>
-#include <java/lang/Array.h>
-#include <java/lang/Boolean.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Double.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/Float.h>
-#include <java/lang/IllegalArgumentException.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
 #include <java/lang/NumberFormatException.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/System.h>
-#include <java/lang/Thread.h>
 #include <java/lang/UnsupportedOperationException.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/security/AccessController.h>
 #include <java/security/PrivilegedAction.h>
 #include <java/util/AbstractList.h>
@@ -221,7 +201,6 @@ $Object* allocate$AbstractPreferences($Class* clazz) {
 
 $StringArray* AbstractPreferences::EMPTY_STRING_ARRAY = nullptr;
 $AbstractPreferencesArray* AbstractPreferences::EMPTY_ABSTRACT_PREFS_ARRAY = nullptr;
-
 $List* AbstractPreferences::eventQueue = nullptr;
 $Thread* AbstractPreferences::eventDispatchThread = nullptr;
 
@@ -294,8 +273,7 @@ $String* AbstractPreferences::get($String* key, $String* def) {
 		$var($String, result, nullptr);
 		try {
 			$assign(result, getSpi(key));
-		} catch ($Exception&) {
-			$catch();
+		} catch ($Exception& e) {
 		}
 		return (result == nullptr ? def : result);
 	}
@@ -341,8 +319,7 @@ int32_t AbstractPreferences::getInt($String* key, int32_t def) {
 		if (value != nullptr) {
 			result = $Integer::parseInt(value);
 		}
-	} catch ($NumberFormatException&) {
-		$catch();
+	} catch ($NumberFormatException& e) {
 	}
 	return result;
 }
@@ -358,8 +335,7 @@ int64_t AbstractPreferences::getLong($String* key, int64_t def) {
 		if (value != nullptr) {
 			result = $Long::parseLong(value);
 		}
-	} catch ($NumberFormatException&) {
-		$catch();
+	} catch ($NumberFormatException& e) {
 	}
 	return result;
 }
@@ -392,8 +368,7 @@ float AbstractPreferences::getFloat($String* key, float def) {
 		if (value != nullptr) {
 			result = $Float::parseFloat(value);
 		}
-	} catch ($NumberFormatException&) {
-		$catch();
+	} catch ($NumberFormatException& e) {
 	}
 	return result;
 }
@@ -409,8 +384,7 @@ double AbstractPreferences::getDouble($String* key, double def) {
 		if (value != nullptr) {
 			result = $Double::parseDouble(value);
 		}
-	} catch ($NumberFormatException&) {
-		$catch();
+	} catch ($NumberFormatException& e) {
 	}
 	return result;
 }
@@ -427,8 +401,7 @@ $bytes* AbstractPreferences::getByteArray($String* key, $bytes* def) {
 		if (value != nullptr) {
 			$assign(result, $Base64::base64ToByteArray(value));
 		}
-	} catch ($RuntimeException&) {
-		$catch();
+	} catch ($RuntimeException& e) {
 	}
 	return result;
 }
@@ -601,8 +574,7 @@ void AbstractPreferences::removeNode2() {
 				try {
 					$nc(($cast(AbstractPreferences, $(i->next()))))->removeNode2();
 					i->remove();
-				} catch ($BackingStoreException&) {
-					$catch();
+				} catch ($BackingStoreException& x) {
 				}
 			}
 		}

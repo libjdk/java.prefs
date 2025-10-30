@@ -2,28 +2,14 @@
 
 #include <java/io/ByteArrayOutputStream.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InterruptedException.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/SecurityException.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/System.h>
-#include <java/lang/Thread.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/security/AccessController.h>
 #include <java/security/PrivilegedAction.h>
 #include <java/util/StringTokenizer.h>
@@ -243,17 +229,11 @@ $Object* allocate$WindowsPreferences($Class* clazz) {
 	return $of($alloc(WindowsPreferences));
 }
 
-
 $PlatformLogger* WindowsPreferences::logger$ = nullptr;
-
 $bytes* WindowsPreferences::WINDOWS_ROOT_PATH = nullptr;
-
 $volatile($Preferences*) WindowsPreferences::userRoot = nullptr;
-
 $volatile($Preferences*) WindowsPreferences::systemRoot = nullptr;
-
 int32_t WindowsPreferences::INIT_SLEEP_TIME = 0;
-
 int32_t WindowsPreferences::MAX_ATTEMPTS = 0;
 
 $Preferences* WindowsPreferences::getUserRoot() {
@@ -313,8 +293,7 @@ $longs* WindowsPreferences::WindowsRegOpenKey1(int64_t hKey, $bytes* subKey, int
 		for (int32_t i = 0; i < WindowsPreferences::MAX_ATTEMPTS; ++i) {
 			try {
 				$Thread::sleep(sleepTime);
-			} catch ($InterruptedException&) {
-				$var($InterruptedException, e, $catch());
+			} catch ($InterruptedException& e) {
 				return result;
 			}
 			sleepTime *= 2;
@@ -347,7 +326,6 @@ $longs* WindowsPreferences::WindowsRegCreateKeyEx(int64_t hKey, $bytes* subKey) 
 
 $longs* WindowsPreferences::WindowsRegCreateKeyEx1(int64_t hKey, $bytes* subKey) {
 	$init(WindowsPreferences);
-	$useLocalCurrentObjectStackCache();
 	$var($longs, result, WindowsRegCreateKeyEx(hKey, subKey));
 	if ($nc(result)->get(WindowsPreferences::ERROR_CODE) == WindowsPreferences::ERROR_SUCCESS) {
 		return result;
@@ -356,8 +334,7 @@ $longs* WindowsPreferences::WindowsRegCreateKeyEx1(int64_t hKey, $bytes* subKey)
 		for (int32_t i = 0; i < WindowsPreferences::MAX_ATTEMPTS; ++i) {
 			try {
 				$Thread::sleep(sleepTime);
-			} catch ($InterruptedException&) {
-				$var($InterruptedException, e, $catch());
+			} catch ($InterruptedException& e) {
 				return result;
 			}
 			sleepTime *= 2;
@@ -390,7 +367,6 @@ int32_t WindowsPreferences::WindowsRegFlushKey(int64_t hKey) {
 
 int32_t WindowsPreferences::WindowsRegFlushKey1(int64_t hKey) {
 	$init(WindowsPreferences);
-	$useLocalCurrentObjectStackCache();
 	int32_t result = WindowsRegFlushKey(hKey);
 	if (result == WindowsPreferences::ERROR_SUCCESS) {
 		return result;
@@ -399,8 +375,7 @@ int32_t WindowsPreferences::WindowsRegFlushKey1(int64_t hKey) {
 		for (int32_t i = 0; i < WindowsPreferences::MAX_ATTEMPTS; ++i) {
 			try {
 				$Thread::sleep(sleepTime);
-			} catch ($InterruptedException&) {
-				$var($InterruptedException, e, $catch());
+			} catch ($InterruptedException& e) {
 				return result;
 			}
 			sleepTime *= 2;
@@ -433,7 +408,6 @@ int32_t WindowsPreferences::WindowsRegSetValueEx(int64_t hKey, $bytes* valueName
 
 int32_t WindowsPreferences::WindowsRegSetValueEx1(int64_t hKey, $bytes* valueName, $bytes* value) {
 	$init(WindowsPreferences);
-	$useLocalCurrentObjectStackCache();
 	int32_t result = WindowsRegSetValueEx(hKey, valueName, value);
 	if (result == WindowsPreferences::ERROR_SUCCESS) {
 		return result;
@@ -442,8 +416,7 @@ int32_t WindowsPreferences::WindowsRegSetValueEx1(int64_t hKey, $bytes* valueNam
 		for (int32_t i = 0; i < WindowsPreferences::MAX_ATTEMPTS; ++i) {
 			try {
 				$Thread::sleep(sleepTime);
-			} catch ($InterruptedException&) {
-				$var($InterruptedException, e, $catch());
+			} catch ($InterruptedException& e) {
 				return result;
 			}
 			sleepTime *= 2;
@@ -476,7 +449,6 @@ $longs* WindowsPreferences::WindowsRegQueryInfoKey(int64_t hKey) {
 
 $longs* WindowsPreferences::WindowsRegQueryInfoKey1(int64_t hKey) {
 	$init(WindowsPreferences);
-	$useLocalCurrentObjectStackCache();
 	$var($longs, result, WindowsRegQueryInfoKey(hKey));
 	if ($nc(result)->get(WindowsPreferences::ERROR_CODE) == WindowsPreferences::ERROR_SUCCESS) {
 		return result;
@@ -485,8 +457,7 @@ $longs* WindowsPreferences::WindowsRegQueryInfoKey1(int64_t hKey) {
 		for (int32_t i = 0; i < WindowsPreferences::MAX_ATTEMPTS; ++i) {
 			try {
 				$Thread::sleep(sleepTime);
-			} catch ($InterruptedException&) {
-				$var($InterruptedException, e, $catch());
+			} catch ($InterruptedException& e) {
 				return result;
 			}
 			sleepTime *= 2;
@@ -510,7 +481,6 @@ $bytes* WindowsPreferences::WindowsRegEnumKeyEx(int64_t hKey, int32_t subKeyInde
 
 $bytes* WindowsPreferences::WindowsRegEnumKeyEx1(int64_t hKey, int32_t subKeyIndex, int32_t maxKeyLength) {
 	$init(WindowsPreferences);
-	$useLocalCurrentObjectStackCache();
 	$var($bytes, result, WindowsRegEnumKeyEx(hKey, subKeyIndex, maxKeyLength));
 	if (result != nullptr) {
 		return result;
@@ -519,8 +489,7 @@ $bytes* WindowsPreferences::WindowsRegEnumKeyEx1(int64_t hKey, int32_t subKeyInd
 		for (int32_t i = 0; i < WindowsPreferences::MAX_ATTEMPTS; ++i) {
 			try {
 				$Thread::sleep(sleepTime);
-			} catch ($InterruptedException&) {
-				$var($InterruptedException, e, $catch());
+			} catch ($InterruptedException& e) {
 				return result;
 			}
 			sleepTime *= 2;
@@ -544,7 +513,6 @@ $bytes* WindowsPreferences::WindowsRegEnumValue(int64_t hKey, int32_t valueIndex
 
 $bytes* WindowsPreferences::WindowsRegEnumValue1(int64_t hKey, int32_t valueIndex, int32_t maxValueNameLength) {
 	$init(WindowsPreferences);
-	$useLocalCurrentObjectStackCache();
 	$var($bytes, result, WindowsRegEnumValue(hKey, valueIndex, maxValueNameLength));
 	if (result != nullptr) {
 		return result;
@@ -553,8 +521,7 @@ $bytes* WindowsPreferences::WindowsRegEnumValue1(int64_t hKey, int32_t valueInde
 		for (int32_t i = 0; i < WindowsPreferences::MAX_ATTEMPTS; ++i) {
 			try {
 				$Thread::sleep(sleepTime);
-			} catch ($InterruptedException&) {
-				$var($InterruptedException, e, $catch());
+			} catch ($InterruptedException& e) {
 				return result;
 			}
 			sleepTime *= 2;

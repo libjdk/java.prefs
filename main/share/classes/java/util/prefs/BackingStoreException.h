@@ -23,8 +23,10 @@ public:
 	void init$($Throwable* cause);
 	static const int64_t serialVersionUID = (int64_t)0x0BEE9C5C998835F5;
 	BackingStoreException(const BackingStoreException& e);
-	BackingStoreException wrapper$();
-	virtual void throwWrapper$() override;
+	virtual void throw$() override;
+	inline BackingStoreException* operator ->() {
+		return (BackingStoreException*)throwing$;
+	}
 };
 
 		} // prefs

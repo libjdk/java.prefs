@@ -1,18 +1,5 @@
 #include <java/util/prefs/Base64.h>
 
-#include <java/io/PrintStream.h>
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/Integer.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/System.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/Arrays.h>
 #include <java/util/Random.h>
 #include <jcpp.h>
@@ -64,13 +51,9 @@ $Object* allocate$Base64($Class* clazz) {
 	return $of($alloc(Base64));
 }
 
-
 $chars* Base64::intToBase64 = nullptr;
-
 $chars* Base64::intToAltBase64 = nullptr;
-
 $bytes* Base64::base64ToInt = nullptr;
-
 $bytes* Base64::altBase64ToInt = nullptr;
 
 void Base64::init$() {
@@ -200,13 +183,11 @@ void Base64::main($StringArray* args) {
 			$var($String, s, byteArrayToBase64(arr));
 			$var($bytes, b, base64ToByteArray(s));
 			if (!$Arrays::equals(arr, b)) {
-				$init($System);
 				$nc($System::out)->println("Dismal failure!"_s);
 			}
 			$assign(s, byteArrayToAltBase64(arr));
 			$assign(b, altBase64ToByteArray(s));
 			if (!$Arrays::equals(arr, b)) {
-				$init($System);
 				$nc($System::out)->println("Alternate dismal failure!"_s);
 			}
 		}

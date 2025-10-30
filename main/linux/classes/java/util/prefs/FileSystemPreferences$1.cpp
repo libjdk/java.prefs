@@ -2,16 +2,6 @@
 
 #include <java/io/File.h>
 #include <java/io/IOException.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/EnclosingMethodInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/System.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/prefs/FileSystemPreferences.h>
 #include <sun/util/logging/PlatformLogger.h>
 #include <jcpp.h>
@@ -80,8 +70,7 @@ $Object* FileSystemPreferences$1::run() {
 		if ($nc($FileSystemPreferences::userRootDir)->mkdirs()) {
 			try {
 				$FileSystemPreferences::chmod($($nc($FileSystemPreferences::userRootDir)->getCanonicalPath()), 448);
-			} catch ($IOException&) {
-				$var($IOException, e, $catch());
+			} catch ($IOException& e) {
 				$nc($($FileSystemPreferences::getLogger()))->warning("Could not change permissions on userRoot directory. "_s);
 			}
 			$nc($($FileSystemPreferences::getLogger()))->info("Created user preferences directory."_s);
@@ -100,8 +89,7 @@ $Object* FileSystemPreferences$1::run() {
 			if (result != 0) {
 				$nc($($FileSystemPreferences::getLogger()))->warning($$str({"Problem creating userRoot mod file. Chmod failed on "_s, $($nc($FileSystemPreferences::userRootModFile)->getCanonicalPath()), " Unix error code "_s, $$str(result)}));
 			}
-		} catch ($IOException&) {
-			$var($IOException, e, $catch());
+		} catch ($IOException& e) {
 			$nc($($FileSystemPreferences::getLogger()))->warning($(e->toString()));
 		}
 	}

@@ -4,18 +4,6 @@
 #include <java/io/FileInputStream.h>
 #include <java/io/FileNotFoundException.h>
 #include <java/io/InputStream.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/EnclosingMethodInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/AbstractMap.h>
 #include <java/util/Map.h>
 #include <java/util/TreeMap.h>
@@ -110,18 +98,16 @@ $Object* FileSystemPreferences$6::run() {
 				try {
 					try {
 						$XmlSupport::importMap(fis, m);
-					} catch ($Throwable&) {
-						$var($Throwable, t$, $catch());
+					} catch ($Throwable& t$) {
 						try {
 							fis->close();
-						} catch ($Throwable&) {
-							$var($Throwable, x2, $catch());
+						} catch ($Throwable& x2) {
 							t$->addSuppressed(x2);
 						}
 						$throw(t$);
 					}
-				} catch ($Throwable&) {
-					$assign(var$0, $catch());
+				} catch ($Throwable& var$1) {
+					$assign(var$0, var$1);
 				} /*finally*/ {
 					fis->close();
 				}
@@ -130,8 +116,7 @@ $Object* FileSystemPreferences$6::run() {
 				}
 			}
 		}
-	} catch ($Exception&) {
-		$var($Exception, e, $catch());
+	} catch ($Exception& e) {
 		if ($instanceOf($InvalidPreferencesFormatException, e)) {
 			$nc($($FileSystemPreferences::getLogger()))->warning($$str({"Invalid preferences format in "_s, $($nc(this->this$0->prefsFile)->getPath())}));
 			$nc(this->this$0->prefsFile)->renameTo($$new($File, $($nc(this->this$0->prefsFile)->getParentFile()), "IncorrectFormatPrefs.xml"_s));

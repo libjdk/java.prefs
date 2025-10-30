@@ -24,8 +24,10 @@ public:
 	void init$($String* message, $Throwable* cause);
 	static const int64_t serialVersionUID = (int64_t)0xF503433C108FC28B;
 	InvalidPreferencesFormatException(const InvalidPreferencesFormatException& e);
-	InvalidPreferencesFormatException wrapper$();
-	virtual void throwWrapper$() override;
+	virtual void throw$() override;
+	inline InvalidPreferencesFormatException* operator ->() {
+		return (InvalidPreferencesFormatException*)throwing$;
+	}
 };
 
 		} // prefs

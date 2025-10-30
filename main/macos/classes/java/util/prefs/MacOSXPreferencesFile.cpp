@@ -1,24 +1,12 @@
 #include <java/util/prefs/MacOSXPreferencesFile.h>
 
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
 #include <java/lang/ClassLoader.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/Math.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/NumberFormatException.h>
 #include <java/lang/Runnable.h>
 #include <java/lang/Runtime.h>
-#include <java/lang/String.h>
-#include <java/lang/System.h>
-#include <java/lang/Thread.h>
 #include <java/lang/ThreadGroup.h>
 #include <java/lang/ref/WeakReference.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/security/AccessController.h>
 #include <java/security/PrivilegedAction.h>
 #include <java/util/Collection.h>
@@ -346,12 +334,10 @@ int64_t MacOSXPreferencesFile::flushDelay() {
 	$load(MacOSXPreferencesFile);
 	$synchronized(class$) {
 		$init(MacOSXPreferencesFile);
-		$useLocalCurrentObjectStackCache();
 		if (MacOSXPreferencesFile::flushDelay$ == -1) {
 			try {
 				MacOSXPreferencesFile::flushDelay$ = $Math::max(5, $Integer::parseInt($($System::getProperty("java.util.prefs.flushDelay"_s, "60"_s))));
-			} catch ($NumberFormatException&) {
-				$var($NumberFormatException, e, $catch());
+			} catch ($NumberFormatException& e) {
 				MacOSXPreferencesFile::flushDelay$ = 60;
 			}
 		}
@@ -372,8 +358,7 @@ void MacOSXPreferencesFile::initSyncTimerIfNeeded() {
 				} else {
 					MacOSXPreferencesFile::syncInterval = -2;
 				}
-			} catch ($NumberFormatException&) {
-				$var($NumberFormatException, e, $catch());
+			} catch ($NumberFormatException& e) {
 				MacOSXPreferencesFile::syncInterval = -2;
 			}
 			if (MacOSXPreferencesFile::syncInterval > 0) {

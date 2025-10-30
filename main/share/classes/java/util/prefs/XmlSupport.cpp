@@ -5,21 +5,8 @@
 #include <java/io/OutputStream.h>
 #include <java/io/OutputStreamWriter.h>
 #include <java/io/Writer.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/charset/Charset.h>
 #include <java/nio/charset/StandardCharsets.h>
 #include <java/util/AbstractList.h>
@@ -170,7 +157,6 @@ $Object* allocate$XmlSupport($Class* clazz) {
 
 $String* XmlSupport::PREFS_DTD_URI = nullptr;
 $String* XmlSupport::PREFS_DTD = nullptr;
-
 $String* XmlSupport::EXTERNAL_XML_VERSION = nullptr;
 $String* XmlSupport::MAP_XML_VERSION = nullptr;
 
@@ -260,8 +246,7 @@ void XmlSupport::importPreferences($InputStream* is) {
 		$var($Element, xmlRoot, $cast($Element, $nc($($nc($(doc->getDocumentElement()))->getChildNodes()))->item(0)));
 		$var($Preferences, prefsRoot, $nc($($nc(xmlRoot)->getAttribute("type"_s)))->equals("user"_s) ? $Preferences::userRoot() : $Preferences::systemRoot());
 		ImportSubtree(prefsRoot, xmlRoot);
-	} catch ($SAXException&) {
-		$var($SAXException, e, $catch());
+	} catch ($SAXException& e) {
 		$throwNew($InvalidPreferencesFormatException, static_cast<$Throwable*>(e));
 	}
 }
@@ -273,8 +258,7 @@ $Document* XmlSupport::createPrefsDoc($String* qname) {
 		$var($DOMImplementation, di, $nc($($nc($($DocumentBuilderFactory::newInstance()))->newDocumentBuilder()))->getDOMImplementation());
 		$var($DocumentType, dt, $nc(di)->createDocumentType(qname, nullptr, XmlSupport::PREFS_DTD_URI));
 		return di->createDocument(nullptr, qname, dt);
-	} catch ($ParserConfigurationException&) {
-		$var($ParserConfigurationException, e, $catch());
+	} catch ($ParserConfigurationException& e) {
 		$throwNew($AssertionError, $of(e));
 	}
 	$shouldNotReachHere();
@@ -293,8 +277,7 @@ $Document* XmlSupport::loadPrefsDoc($InputStream* in) {
 		$nc(db)->setEntityResolver($$new($XmlSupport$Resolver));
 		db->setErrorHandler($$new($XmlSupport$EH));
 		return db->parse($$new($InputSource, in));
-	} catch ($ParserConfigurationException&) {
-		$var($ParserConfigurationException, e, $catch());
+	} catch ($ParserConfigurationException& e) {
 		$throwNew($AssertionError, $of(e));
 	}
 	$shouldNotReachHere();
@@ -307,8 +290,7 @@ void XmlSupport::writeDoc($Document* doc, $OutputStream* out) {
 		$var($TransformerFactory, tf, $TransformerFactory::newInstance());
 		try {
 			$nc(tf)->setAttribute("indent-number"_s, $($Integer::valueOf(2)));
-		} catch ($IllegalArgumentException&) {
-			$catch();
+		} catch ($IllegalArgumentException& iae) {
 		}
 		$var($Transformer, t, $nc(tf)->newTransformer());
 		$init($OutputKeys);
@@ -317,8 +299,7 @@ void XmlSupport::writeDoc($Document* doc, $OutputStream* out) {
 		$var($Source, var$0, static_cast<$Source*>($new($DOMSource, doc)));
 		$init($StandardCharsets);
 		t->transform(var$0, $$new($StreamResult, static_cast<$Writer*>($$new($BufferedWriter, $$new($OutputStreamWriter, out, $StandardCharsets::UTF_8)))));
-	} catch ($TransformerException&) {
-		$var($TransformerException, e, $catch());
+	} catch ($TransformerException& e) {
 		$throwNew($AssertionError, $of(e));
 	}
 }
@@ -401,8 +382,7 @@ void XmlSupport::importMap($InputStream* is, $Map* m) {
 				$nc(m)->put(var$0, $(entry->getAttribute("value"_s)));
 			}
 		}
-	} catch ($SAXException&) {
-		$var($SAXException, e, $catch());
+	} catch ($SAXException& e) {
 		$throwNew($InvalidPreferencesFormatException, static_cast<$Throwable*>(e));
 	}
 }

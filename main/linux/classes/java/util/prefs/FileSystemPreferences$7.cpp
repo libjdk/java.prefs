@@ -3,18 +3,6 @@
 #include <java/io/File.h>
 #include <java/io/FileOutputStream.h>
 #include <java/io/OutputStream.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/EnclosingMethodInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/Map.h>
 #include <java/util/prefs/BackingStoreException.h>
 #include <java/util/prefs/FileSystemPreferences.h>
@@ -101,18 +89,16 @@ $Object* FileSystemPreferences$7::run() {
 				try {
 					try {
 						$XmlSupport::exportMap(fos, this->this$0->prefsCache);
-					} catch ($Throwable&) {
-						$var($Throwable, t$, $catch());
+					} catch ($Throwable& t$) {
 						try {
 							fos->close();
-						} catch ($Throwable&) {
-							$var($Throwable, x2, $catch());
+						} catch ($Throwable& x2) {
 							t$->addSuppressed(x2);
 						}
 						$throw(t$);
 					}
-				} catch ($Throwable&) {
-					$assign(var$1, $catch());
+				} catch ($Throwable& var$2) {
+					$assign(var$1, var$2);
 				} /*finally*/ {
 					fos->close();
 				}
@@ -124,8 +110,7 @@ $Object* FileSystemPreferences$7::run() {
 		if (!$nc(this->this$0->tmpFile)->renameTo(this->this$0->prefsFile)) {
 			$throwNew($BackingStoreException, $$str({"Can\'t rename "_s, this->this$0->tmpFile, " to "_s, this->this$0->prefsFile}));
 		}
-	} catch ($Exception&) {
-		$var($Exception, e, $catch());
+	} catch ($Exception& e) {
 		if ($instanceOf($BackingStoreException, e)) {
 			$throw($cast($BackingStoreException, e));
 		}

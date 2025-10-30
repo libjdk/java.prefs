@@ -1,17 +1,8 @@
 #include <java/util/prefs/AbstractPreferences$EventDispatchThread.h>
 
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/InterruptedException.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/Thread.h>
 #include <java/lang/ThreadGroup.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/EventObject.h>
 #include <java/util/List.h>
 #include <java/util/prefs/AbstractPreferences$NodeAddedEvent.h>
@@ -89,8 +80,7 @@ void AbstractPreferences$EventDispatchThread::run() {
 					$nc($of($AbstractPreferences::eventQueue))->wait();
 				}
 				$assign(event, $cast($EventObject, $nc($AbstractPreferences::eventQueue)->remove(0)));
-			} catch ($InterruptedException&) {
-				$var($InterruptedException, e, $catch());
+			} catch ($InterruptedException& e) {
 				return;
 			}
 		}

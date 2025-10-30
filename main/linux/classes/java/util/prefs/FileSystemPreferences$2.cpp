@@ -2,16 +2,6 @@
 
 #include <java/io/File.h>
 #include <java/io/IOException.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/EnclosingMethodInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/System.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/prefs/FileSystemPreferences.h>
 #include <sun/util/logging/PlatformLogger.h>
 #include <jcpp.h>
@@ -82,8 +72,7 @@ $Object* FileSystemPreferences$2::run() {
 				$nc($($FileSystemPreferences::getLogger()))->info("Created system preferences directory in java.home."_s);
 				try {
 					$FileSystemPreferences::chmod($($nc($FileSystemPreferences::systemRootDir)->getCanonicalPath()), 493);
-				} catch ($IOException&) {
-					$catch();
+				} catch ($IOException& e) {
 				}
 			} else {
 				$nc($($FileSystemPreferences::getLogger()))->warning("Could not create system preferences directory. System preferences are unusable."_s);
@@ -100,8 +89,7 @@ $Object* FileSystemPreferences$2::run() {
 			if (result != 0) {
 				$nc($($FileSystemPreferences::getLogger()))->warning($$str({"Chmod failed on "_s, $($nc($FileSystemPreferences::systemRootModFile)->getCanonicalPath()), " Unix error code "_s, $$str(result)}));
 			}
-		} catch ($IOException&) {
-			$var($IOException, e, $catch());
+		} catch ($IOException& e) {
 			$nc($($FileSystemPreferences::getLogger()))->warning($(e->toString()));
 		}
 	}
